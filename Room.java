@@ -39,7 +39,7 @@ public class Room
      * @param south The south exit.
      * @param west The west exit.
      */
-    public void setExits(Room north, Room east, Room south, Room west) 
+    public void setExits(Room north, Room south, Room east, Room west) 
     {
         if(north != null)
             northExit = north;
