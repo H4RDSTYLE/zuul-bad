@@ -168,6 +168,7 @@ public class Game
         System.out.println("Estas " + currentRoom.getDescription());
         System.out.println("Salidas: " + currentRoom.getExitString());
     }
+    
     /** 
      * "Quit" was entered. Check the rest of the command to see
      * whether we really quit the game.

@@ -1,3 +1,4 @@
+import java.util.HashMap;
 /**
  * Class Room - a room in an adventure game.
  *
@@ -15,11 +16,7 @@
 public class Room 
 {
     private String description;
-    private Room northExit;
-    private Room southExit;
-    private Room eastExit;
-    private Room westExit;
-    private Room southWestExit;
+    private HashMap<String, Room> direcciones;
     /**
      * Create a room described "description". Initially, it has
      * no exits. "description" is something like "a kitchen" or
@@ -29,6 +26,7 @@ public class Room
     public Room(String description) 
     {
         this.description = description;
+        direcciones = new HashMap<String, Room>();
     }
 
     /**
@@ -40,19 +38,19 @@ public class Room
     public Room getExit(String direction){
         Room nextRoom = null;
         if(direction.equals("north")) {
-            nextRoom = northExit;
+            nextRoom = direcciones.get(direction);
         }
         if(direction.equals("east")) {
-            nextRoom = eastExit;
+            nextRoom = direcciones.get(direction);
         }
         if(direction.equals("south")) {
-            nextRoom = southExit;
+            nextRoom = direcciones.get(direction);
         }
         if(direction.equals("west")) {
-            nextRoom = westExit;
+            nextRoom = direcciones.get(direction);
         }
         if(direction.equals("southwest"))
-            nextRoom = southWestExit;
+            nextRoom = direcciones.get(direction);
         return nextRoom;
     }
     
@@ -65,19 +63,19 @@ public class Room
      */
     public String getExitString(){
         String aDevolver = "";
-        if(northExit != null) {
+        if(direcciones.containsKey("north")) {
             aDevolver += "north ";
         }
-        if(southExit != null) {
+        if(direcciones.containsKey("south")) {
             aDevolver += "south ";
         }
-        if(eastExit != null) {
+        if(direcciones.containsKey("east")) {
             aDevolver += "east ";
         }
-        if(westExit != null) {
+        if(direcciones.containsKey("west")) {
             aDevolver += "west ";
         }
-        if (southWestExit != null){
+        if(direcciones.containsKey("southwest")){
             aDevolver += "southwest ";
         }
         return aDevolver;
@@ -90,41 +88,20 @@ public class Room
      */
     public void setExit(String direccion, Room sala){
         if(direccion.equals("north")) {
-            northExit = sala;
+            direcciones.put(direccion, sala);
         }
         if(direccion.equals("south")) {
-            southExit = sala;
+            direcciones.put(direccion, sala);
         }
         if(direccion.equals("east")) {
-            eastExit = sala;
+            direcciones.put(direccion, sala);
         }
         if(direccion.equals("west")) {
-            westExit = sala;
+            direcciones.put(direccion, sala);
         }
         if (direccion.equals("southwest")){
-            southWestExit = sala;
+            direcciones.put(direccion, sala);
         }
-    }
-    /**
-     * Define the exits of this room.  Every direction either leads
-     * to another room or is null (no exit there).
-     * @param north The north exit.
-     * @param east The east east.
-     * @param south The south exit.
-     * @param west The west exit.
-     */
-    public void setExits(Room north, Room south, Room east, Room west, Room southWest) 
-    {
-        if(north != null)
-            northExit = north;
-        if(east != null)
-            eastExit = east;
-        if(south != null)
-            southExit = south;
-        if(west != null)
-            westExit = west;
-        if(southWest != null)
-            southWestExit = southWest;
     }
 
     /**
