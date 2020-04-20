@@ -46,13 +46,13 @@ public class Game
         iglesia = new Room("en la iglesia del vecindario.");
 
         // initialise room exits
-        plaza.setExits(vecindario, bar, fronton, parque);
-        fronton.setExits(null, null, null, plaza);
-        vecindario.setExits(null, plaza, iglesia, casas);
-        bar.setExits(plaza, null, null, null);
-        parque.setExits(null, null, plaza, null);
-        casas.setExits(null, null, vecindario, null);
-        iglesia.setExits(null, null, null, vecindario);
+        plaza.setExits(vecindario, bar, fronton, parque, null);
+        fronton.setExits(null, null, null, plaza, null);
+        vecindario.setExits(null, plaza, iglesia, casas, null);
+        bar.setExits(plaza, null, null, null, null);
+        parque.setExits(null, null, plaza, null, null);
+        casas.setExits(null, null, vecindario, null, plaza);
+        iglesia.setExits(null, null, null, vecindario, null);
         
         currentRoom = plaza;  // start game outside
     }
@@ -160,6 +160,8 @@ public class Game
         if(direction.equals("west")) {
             nextRoom = currentRoom.westExit;
         }
+        if(direction.equals("southwest"))
+            nextRoom = currentRoom.southWestExit;
 
         if (nextRoom == null) {
             System.out.println("There is no door!");
@@ -185,6 +187,8 @@ public class Game
         if(currentRoom.westExit != null) {
             System.out.print("west ");
         }
+        if (currentRoom.southWestExit != null)
+            System.out.print("southwest ");
         System.out.println();
     }
     /** 
