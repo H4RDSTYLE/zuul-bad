@@ -46,13 +46,19 @@ public class Game
         iglesia = new Room("en la iglesia del vecindario.");
 
         // initialise room exits
-        plaza.setExits(vecindario, bar, fronton, parque, null);
-        fronton.setExits(null, null, null, plaza, null);
-        vecindario.setExits(null, plaza, iglesia, casas, null);
-        bar.setExits(plaza, null, null, null, null);
-        parque.setExits(null, null, plaza, null, null);
-        casas.setExits(null, null, vecindario, null, plaza);
-        iglesia.setExits(null, null, null, vecindario, null);
+        plaza.setExit("north", vecindario);
+        plaza.setExit("south", bar);
+        plaza.setExit("east", fronton);
+        plaza.setExit("west", parque);
+        fronton.setExit("west", plaza);
+        vecindario.setExit("south", plaza);
+        vecindario.setExit("east", iglesia);
+        vecindario.setExit("west", casas);
+        bar.setExit("north", plaza);
+        parque.setExit("east", plaza);
+        casas.setExit("east", vecindario);
+        casas.setExit("southwest", plaza);
+        iglesia.setExit("west", vecindario);
         
         currentRoom = plaza;  // start game outside
     }
@@ -147,21 +153,7 @@ public class Game
         String direction = command.getSecondWord();
 
         // Try to leave current room.
-        Room nextRoom = null;
-        if(direction.equals("north")) {
-            nextRoom = currentRoom.northExit;
-        }
-        if(direction.equals("east")) {
-            nextRoom = currentRoom.eastExit;
-        }
-        if(direction.equals("south")) {
-            nextRoom = currentRoom.southExit;
-        }
-        if(direction.equals("west")) {
-            nextRoom = currentRoom.westExit;
-        }
-        if(direction.equals("southwest"))
-            nextRoom = currentRoom.southWestExit;
+        Room nextRoom = currentRoom.getExit(direction);
 
         if (nextRoom == null) {
             System.out.println("There is no door!");
@@ -174,22 +166,7 @@ public class Game
     
     private void printLocalInfo(){
         System.out.println("Estas " + currentRoom.getDescription());
-        System.out.print("Salidas: ");
-        if(currentRoom.northExit != null) {
-            System.out.print("north ");
-        }
-        if(currentRoom.southExit != null) {
-            System.out.print("south ");
-        }
-        if(currentRoom.eastExit != null) {
-            System.out.print("east ");
-        }
-        if(currentRoom.westExit != null) {
-            System.out.print("west ");
-        }
-        if (currentRoom.southWestExit != null)
-            System.out.print("southwest ");
-        System.out.println();
+        System.out.println("Salidas: " + currentRoom.getExitString());
     }
     /** 
      * "Quit" was entered. Check the rest of the command to see
