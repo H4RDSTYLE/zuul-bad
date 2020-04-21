@@ -29,7 +29,13 @@ public class Parser
         commands = new CommandWords();
         reader = new Scanner(System.in);
     }
-
+    /** 
+     * Imprime una lista de las palabras de comando validas 
+     */
+    public String showCommands(){
+        return commands.showAll();
+    }
+    
     /**
      * @return The next command from the user.
      */

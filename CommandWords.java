@@ -38,4 +38,15 @@ public class CommandWords
         // if we get here, the string was not found in the commands
         return false;
     }
-}
+    
+    /** 
+     * Imprime por pantalla todos los comandos válidos 
+     */
+    public String showAll(){
+        String aDevolver = "";
+        for(int i = 0; i<validCommands.length; i++){
+            aDevolver += validCommands[i] + " ";
+        }
+        return aDevolver;
+    }
+    }
