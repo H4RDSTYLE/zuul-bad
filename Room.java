@@ -52,6 +52,19 @@ public class Room
         String aDevolver = direcciones.keySet().toString().substring(1, direcciones.keySet().toString().length()-1).replaceAll(",", "");
         return aDevolver;
     }
+    
+    /**
+     * Devuelve un texto con la descripcion completa de la habitacion, que 
+     * incluye la descripcion corta de la sala y las salidas de la misma. Por ejemplo:
+     *     You are in the lab
+     *     Exits: north west southwest
+     * @return Una descripcion completa de la habitacion incluyendo sus salidas
+     */
+    public String getLongDescription(){
+        String aDevolver = "Estas " + getDescription() + "\n" + "Exits: " + getExitString();
+        return aDevolver;
+    }
+    
     /**
      * Define una salida para esta sala
      * 

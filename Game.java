@@ -170,8 +170,7 @@ public class Game
     }
     
     private void printLocalInfo(){
-        System.out.println("Estas " + currentRoom.getDescription());
-        System.out.println("Salidas: " + currentRoom.getExitString());
+        System.out.println(currentRoom.getLongDescription());
     }
     
     /** 
