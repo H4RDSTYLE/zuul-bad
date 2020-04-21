@@ -50,14 +50,19 @@ public class Game
         plaza.setExit("south", bar);
         plaza.setExit("east", fronton);
         plaza.setExit("west", parque);
+        plaza.setExit("northwest", casas);
         fronton.setExit("west", plaza);
+        fronton.setExit("ruta127", bar);
         vecindario.setExit("south", plaza);
         vecindario.setExit("east", iglesia);
         vecindario.setExit("west", casas);
         bar.setExit("north", plaza);
+        bar.setExit("ruta127", fronton);
+        bar.setExit("ruta2", parque);
         parque.setExit("east", plaza);
+        parque.setExit("ruta2", bar);
         casas.setExit("east", vecindario);
-        casas.setExit("southwest", plaza);
+        casas.setExit("southeast", plaza);
         iglesia.setExit("west", vecindario);
         
         currentRoom = plaza;  // start game outside
