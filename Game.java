@@ -126,6 +126,9 @@ public class Game
         else if (commandWord.equals("look")) {
             look();
         }
+        else if(commandWord.equals("eat")){
+            eat();
+        }
 
         return wantToQuit;
     }
@@ -190,6 +193,10 @@ public class Game
         else {
             return true;  // signal that we want to quit
         }
+    }
+    
+    private void eat() {
+        System.out.println("You have eaten now and you are not hungry any more");
     }
     
     private void look() {
