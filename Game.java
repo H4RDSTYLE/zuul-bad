@@ -37,13 +37,13 @@ public class Game
         Room plaza, fronton, parque, vecindario, bar, casas, iglesia;
       
         // create the rooms
-        plaza = new Room("en la plaza del pueblo.");
-        bar = new Room("en el reino de la cerveza (bar).");
-        parque = new Room("en el parque.");
-        vecindario = new Room("en el vecindario.");
-        fronton = new Room("en tierras de pelota vasca.");
-        casas = new Room("en la zona residencial del vecindario.");
-        iglesia = new Room("en la iglesia del vecindario.");
+        plaza = new Room("en la plaza del pueblo.", null, null);
+        bar = new Room("en el reino de la cerveza (bar).", "pocion", "500 gramos");
+        parque = new Room("en el parque.", "caramelo", "50 gramos");
+        vecindario = new Room("en el vecindario.", null, null);
+        fronton = new Room("en tierras de pelota vasca.", null, null);
+        casas = new Room("en la zona residencial del vecindario.", null, null);
+        iglesia = new Room("en la iglesia del vecindario.", "espada", "1500 gramos");
 
         // initialise room exits
         plaza.setExit("north", vecindario);

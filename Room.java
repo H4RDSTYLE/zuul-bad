@@ -15,7 +15,7 @@ import java.util.HashMap;
  */
 public class Room 
 {
-    private String description;
+    private String description, itemDescription, itemWeight;
     private HashMap<String, Room> direcciones;
     /**
      * Create a room described "description". Initially, it has
@@ -23,9 +23,11 @@ public class Room
      * "an open court yard".
      * @param description The room's description.
      */
-    public Room(String description) 
+    public Room(String description, String itemDescription, String itemWeight) 
     {
         this.description = description;
+        this.itemDescription = itemDescription;
+        this.itemWeight = itemWeight;
         direcciones = new HashMap<String, Room>();
     }
 
@@ -40,7 +42,7 @@ public class Room
         nextRoom = direcciones.get(direction);
         return nextRoom;
     }
-    
+
     /**
      * Devuelve la información de las salidas existentes
      * Por ejemplo: "Exits: north east west" o "Exits: south" 
@@ -52,7 +54,7 @@ public class Room
         String aDevolver = direcciones.keySet().toString().substring(1, direcciones.keySet().toString().length()-1).replaceAll(",", "");
         return aDevolver;
     }
-    
+
     /**
      * Devuelve un texto con la descripcion completa de la habitacion, que 
      * incluye la descripcion corta de la sala y las salidas de la misma. Por ejemplo:
@@ -61,10 +63,10 @@ public class Room
      * @return Una descripcion completa de la habitacion incluyendo sus salidas
      */
     public String getLongDescription(){
-        String aDevolver = "Estas " + getDescription() + "\n" + "Exits: " + getExitString();
+        String aDevolver = "Estas " + getDescription() + "\n" + "Exits: " + getExitString() + "\n" + getObjetoSala();
         return aDevolver;
     }
-    
+
     /**
      * Define una salida para esta sala
      * 
@@ -83,4 +85,11 @@ public class Room
         return description;
     }
 
+    public String getObjetoSala(){
+        String aDevolver = "";
+        if(itemDescription != null){
+            aDevolver = "En esta sala hay: \n" + "Objeto: " + itemDescription + "\n"+ "Peso objeto: " + itemWeight;
+        }
+        return aDevolver;
+    }
 }
