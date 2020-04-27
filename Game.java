@@ -35,16 +35,19 @@ public class Game
     private void createRooms()
     {
         Room plaza, fronton, parque, vecindario, bar, casas, iglesia;
-      
+        Item espada, pocion, caramelo;
+        // create the objects
+        espada = new Item("espada", 1500);
+        pocion = new Item("pocion", 500);
+        caramelo = new Item("caramelo", 50);
         // create the rooms
-        plaza = new Room("en la plaza del pueblo.", null, null);
-        bar = new Room("en el reino de la cerveza (bar).", "pocion", "500 gramos");
-        parque = new Room("en el parque.", "caramelo", "50 gramos");
-        vecindario = new Room("en el vecindario.", null, null);
-        fronton = new Room("en tierras de pelota vasca.", null, null);
-        casas = new Room("en la zona residencial del vecindario.", null, null);
-        iglesia = new Room("en la iglesia del vecindario.", "espada", "1500 gramos");
-
+        plaza = new Room("en la plaza del pueblo.", null);
+        bar = new Room("en el reino de la cerveza (bar).", pocion);
+        parque = new Room("en el parque.", caramelo);
+        vecindario = new Room("en el vecindario.", null);
+        fronton = new Room("en tierras de pelota vasca.", null);
+        casas = new Room("en la zona residencial del vecindario.", null);
+        iglesia = new Room("en la iglesia del vecindario.", espada);
         // initialise room exits
         plaza.setExit("north", vecindario);
         plaza.setExit("south", bar);
