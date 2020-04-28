@@ -1,4 +1,4 @@
-    /**
+/**
  *  This class is the main class of the "World of Zuul" application. 
  *  "World of Zuul" is a very simple, text based adventure game.  Users 
  *  can walk around some scenery. That's all. It should really be extended 
@@ -35,19 +35,23 @@ public class Game
     private void createRooms()
     {
         Room plaza, fronton, parque, vecindario, bar, casas, iglesia;
-        Item espada, pocion, caramelo;
+        Item espada, pocion, caramelo, armadura, anillo, pelota;
         // create the objects
         espada = new Item("espada", 1500);
         pocion = new Item("pocion", 500);
         caramelo = new Item("caramelo", 50);
+        armadura = new Item("armadura", 1000);
+        anillo = new Item("anillo", 5);
+        pelota = new Item("pelota", 400);
+        
         // create the rooms
-        plaza = new Room("en la plaza del pueblo.", null);
-        bar = new Room("en el reino de la cerveza (bar).", pocion);
-        parque = new Room("en el parque.", caramelo);
-        vecindario = new Room("en el vecindario.", null);
-        fronton = new Room("en tierras de pelota vasca.", null);
-        casas = new Room("en la zona residencial del vecindario.", null);
-        iglesia = new Room("en la iglesia del vecindario.", espada);
+        plaza = new Room("en la plaza del pueblo.");
+        bar = new Room("en el reino de la cerveza (bar).");
+        parque = new Room("en el parque.");
+        vecindario = new Room("en el vecindario.");
+        fronton = new Room("en tierras de pelota vasca.");
+        casas = new Room("en la zona residencial del vecindario.");
+        iglesia = new Room("en la iglesia del vecindario.");
         // initialise room exits
         plaza.setExit("north", vecindario);
         plaza.setExit("south", bar);
@@ -67,6 +71,14 @@ public class Game
         casas.setExit("east", vecindario);
         casas.setExit("southeast", plaza);
         iglesia.setExit("west", vecindario);
+        // initialise room objects
+        bar.addItem(pocion);
+        bar.addItem(armadura);
+        fronton.addItem(pelota);
+        iglesia.addItem(espada);
+        casas.addItem(anillo);
+        parque.addItem(caramelo);
+        
         
         currentRoom = plaza;  // start game outside
     }

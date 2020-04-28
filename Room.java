@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.ArrayList;
 /**
  * Class Room - a room in an adventure game.
  *
@@ -15,20 +16,20 @@ import java.util.HashMap;
  */
 public class Room 
 {
-    private String description, itemDescription, itemWeight;
+    private String description;
     private HashMap<String, Room> direcciones;
-    private Item item;
+    private ArrayList<Item> objetos;
     /**
      * Create a room described "description". Initially, it has
      * no exits. "description" is something like "a kitchen" or
      * "an open court yard".
      * @param description The room's description.
      */
-    public Room(String description, Item item) 
+    public Room(String description) 
     {
         this.description = description;
-        this.item = item;
         direcciones = new HashMap<String, Room>();
+        objetos = new ArrayList<Item>();
     }
 
     /**
@@ -63,13 +64,21 @@ public class Room
      * @return Una descripcion completa de la habitacion incluyendo sus salidas
      */
     public String getLongDescription(){
-        String aDevolver = "Estas " + getDescription() + "\n" + "Exits: " + getExitString() + "\n";
-        if (item!=null){
-            aDevolver += "En esta sala hay: \n" + item.getDescripcion();
+        String aDevolver = "Estas " + getDescription() + "\n" + "Exits: " + getExitString() + "\n" + getObjetos() ;
+        return aDevolver;
+    }
+    
+    public String getObjetos(){
+        String aDevolver = "";
+        if(!objetos.isEmpty()){
+            aDevolver+= "Objetos: \n";
+            for(Item objeto : objetos){
+                aDevolver += objeto.getDescripcion() + "\n";
+            }
         }
         return aDevolver;
     }
-
+    
     /**
      * Define una salida para esta sala
      * 
@@ -78,6 +87,10 @@ public class Room
      */
     public void setExit(String direccion, Room sala){
         direcciones.put(direccion, sala);
+    }
+    
+    public void addItem(Item item){
+        objetos.add(item);
     }
 
     /**
