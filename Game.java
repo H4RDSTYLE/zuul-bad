@@ -19,7 +19,8 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
-    
+    private String lastCommand;
+    private Room backRoom;
     /**
      * Create the game and initialise its internal map.
      */
@@ -27,6 +28,7 @@ public class Game
     {
         createRooms();
         parser = new Parser();
+        this.lastCommand = "back";
     }
 
     /**
@@ -43,7 +45,7 @@ public class Game
         armadura = new Item("armadura", 1000);
         anillo = new Item("anillo", 5);
         pelota = new Item("pelota", 400);
-        
+
         // create the rooms
         plaza = new Room("en la plaza del pueblo.");
         bar = new Room("en el reino de la cerveza (bar).");
@@ -78,8 +80,7 @@ public class Game
         iglesia.addItem(espada);
         casas.addItem(anillo);
         parque.addItem(caramelo);
-        
-        
+
         currentRoom = plaza;  // start game outside
     }
 
@@ -92,7 +93,7 @@ public class Game
 
         // Enter the main command loop.  Here we repeatedly read commands and
         // execute them until the game is over.
-                
+
         boolean finished = false;
         while (! finished) {
             Command command = parser.getCommand();
@@ -134,15 +135,28 @@ public class Game
         }
         else if (commandWord.equals("go")) {
             goRoom(command);
+            lastCommand = "go";
         }
         else if (commandWord.equals("quit")) {
             wantToQuit = quit(command);
+            lastCommand = "quit";
         }
         else if (commandWord.equals("look")) {
             look();
+            lastCommand = "look";
         }
         else if(commandWord.equals("eat")){
             eat();
+            lastCommand = "eat";
+        }
+        else if(commandWord.equals("back")){
+            if(lastCommand != "back"){
+                back();
+                lastCommand = "back";
+            }
+            else{
+                System.out.println("Oops, it looks like you cant do that.");
+            }
         }
 
         return wantToQuit;
@@ -185,15 +199,16 @@ public class Game
             System.out.println("There is no door!");
         }
         else {
+            backRoom = currentRoom;
             currentRoom = nextRoom;
             printLocalInfo();
         }
     }
-    
+
     private void printLocalInfo(){
         System.out.println(currentRoom.getLongDescription());
     }
-    
+
     /** 
      * "Quit" was entered. Check the rest of the command to see
      * whether we really quit the game.
@@ -209,11 +224,16 @@ public class Game
             return true;  // signal that we want to quit
         }
     }
-    
+
+    private void back(){
+        currentRoom = backRoom;
+        printLocalInfo();
+    }
+
     private void eat() {
         System.out.println("You have eaten now and you are not hungry any more");
     }
-    
+
     private void look() {
         System.out.println(currentRoom.getLongDescription());
     }
