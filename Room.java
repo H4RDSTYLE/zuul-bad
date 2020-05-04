@@ -68,6 +68,14 @@ public class Room
         return aDevolver;
     }
     
+    public void removeItem(Item item){
+        objetos.remove(item);
+    }
+    
+    public ArrayList objetosDisponibles(){
+        return objetos;
+    }
+    
     public String getObjetos(){
         String aDevolver = "";
         if(!objetos.isEmpty()){

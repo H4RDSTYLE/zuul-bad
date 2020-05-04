@@ -1,4 +1,5 @@
 import java.util.Stack;
+import java.util.ArrayList;
 /**
  *  This class is the main class of the "World of Zuul" application. 
  *  "World of Zuul" is a very simple, text based adventure game.  Users 
@@ -22,6 +23,9 @@ public class Game
     private Room currentRoom;
     private Stack<Room> rooms;
     private Room backRoom;
+    private int pesoDisponible;
+    private ArrayList<Item> objetosRecogidos = new ArrayList<Item>();
+    private ArrayList<Item> objetosDisponibles;
     /**
      * Create the game and initialise its internal map.
      */
@@ -30,6 +34,7 @@ public class Game
         createRooms();
         parser = new Parser();
         rooms = new Stack<Room>();
+        this.pesoDisponible = 1500;
     }
 
     /**
@@ -40,12 +45,12 @@ public class Game
         Room plaza, fronton, parque, vecindario, bar, casas, iglesia;
         Item espada, pocion, caramelo, armadura, anillo, pelota;
         // create the objects
-        espada = new Item("espada", 1500);
-        pocion = new Item("pocion", 500);
-        caramelo = new Item("caramelo", 50);
-        armadura = new Item("armadura", 1000);
-        anillo = new Item("anillo", 5);
-        pelota = new Item("pelota", 400);
+        espada = new Item("espada", 1500, "1");
+        pocion = new Item("pocion", 500, "2");
+        caramelo = new Item("caramelo", 50, "3");
+        armadura = new Item("armadura", 1000, "4");
+        anillo = new Item("anillo", 5, "5");
+        pelota = new Item("pelota", 400, "6");
 
         // create the rooms
         plaza = new Room("en la plaza del pueblo.");
@@ -154,6 +159,15 @@ public class Game
                 System.out.println("Oops, it looks like you cant do that.");
             }
         }
+        else if(commandWord.equals("take")){
+            take(command.getSecondWord().toString());
+        }
+        else if(commandWord.equals("drop")){
+            drop(command.getSecondWord().toString());
+        }
+        else if(commandWord.equals("items")){
+            items();
+        }
 
         return wantToQuit;
     }
@@ -197,6 +211,7 @@ public class Game
         else {
             rooms.push(currentRoom);
             currentRoom = nextRoom;
+            this.objetosDisponibles = currentRoom.objetosDisponibles();
             printLocalInfo();
         }
     }
@@ -221,13 +236,56 @@ public class Game
         }
     }
 
+    private void take(String id){
+        boolean idfound = false;
+        for (int i = 0; i < this.objetosDisponibles.size() && idfound == false; i++){
+            Item item = this.objetosDisponibles.get(i);
+            if(item.getId().equals(id)){
+                idfound = true;
+                if(item.getPeso()<pesoDisponible){
+                    objetosRecogidos.add(item);
+                    currentRoom.removeItem(item);
+                    pesoDisponible -= item.getPeso();
+                    System.out.println("You have took the item.");
+                }
+                else{
+                    System.out.println("Oops, it looks like you can't take it, it's too heavy, maybe if you drop an item...");
+                }
+            }
+
+        }
+    }
+
+    private void items(){
+        if(!objetosRecogidos.isEmpty()){
+            for(Item item : objetosRecogidos){
+                System.out.println(item.getDescripcion());
+            }
+        }
+        else{
+            System.out.println("You don't have objects!");
+        }
+    }
+
+    private void drop(String id){
+        for (int i = 0; i < this.objetosRecogidos.size(); i++){
+            Item item = this.objetosRecogidos.get(i);
+            if(item.getId().equals(id)){
+                currentRoom.addItem(item);
+                objetosRecogidos.remove(item);
+                pesoDisponible += item.getPeso();
+                System.out.println("Object dropped!");
+            }
+        }
+    }
+
     private void back(){
         currentRoom = rooms.pop();
         printLocalInfo();
     }
 
     private void eat() {
-        System.out.println("You have eaten now and you are not hungry any more");
+        System.out.println("You have eaten now and you are not hungry any more!");
     }
 
     private void look() {
