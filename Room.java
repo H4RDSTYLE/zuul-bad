@@ -92,6 +92,14 @@ public class Room
     public void addItem(Item item){
         objetos.add(item);
     }
+    
+    public ArrayList getArrayObjetos(){
+        return objetos;
+    }
+    
+    public void removeItem(Item item){
+        objetos.remove(item);
+    }
 
     /**
      * @return The description of the room.

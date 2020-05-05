@@ -25,10 +25,10 @@ public class Game
     /**
      * Create the game and initialise its internal map.
      */
-    public Game() 
+    public Game(int fuerzaJugador) 
     {
         parser = new Parser();
-        jugador = new Player();
+        jugador = new Player(fuerzaJugador);
         createRooms();
     }
 
@@ -40,12 +40,12 @@ public class Game
         Room plaza, fronton, parque, vecindario, bar, casas, iglesia;
         Item espada, pocion, caramelo, armadura, anillo, pelota;
         // create the objects
-        espada = new Item("espada", 1500);
-        pocion = new Item("pocion", 500);
-        caramelo = new Item("caramelo", 50);
-        armadura = new Item("armadura", 1000);
-        anillo = new Item("anillo", 5);
-        pelota = new Item("pelota", 400);
+        espada = new Item("espada", 1500, true);
+        pocion = new Item("pocion", 500, true);
+        caramelo = new Item("caramelo", 50, true);
+        armadura = new Item("armadura", 1000, true);
+        anillo = new Item("anillo", 5, true);
+        pelota = new Item("pelota", 400, true);
 
         // create the rooms
         plaza = new Room("en la plaza del pueblo.");
@@ -148,6 +148,25 @@ public class Game
         }
         else if(commandWord.equals("back")){
             jugador.back();
+        }
+        else if(commandWord.equals("items")){
+            jugador.items();
+        }
+        else if(commandWord.equals("drop")){
+            if(command.hasSecondWord()){
+                jugador.drop(command.getSecondWord().toString());
+            }
+            else{
+                System.out.println("Oops what object do you want to drop?");
+            }
+        }
+        else if(commandWord.equals("take")){
+            if(command.hasSecondWord()){
+                jugador.take(command.getSecondWord().toString());
+            }
+            else{
+                System.out.println("Oops what object do you want to take?");
+            }
         }
 
         return wantToQuit;
