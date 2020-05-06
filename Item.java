@@ -10,14 +10,16 @@ public class Item
     private int itemWeight;
     private String itemDescription;
     private Boolean sePuedeCoger;
+    private double multiplicadorFuerza;
     /**
      * Constructor for objects of class Item
      */
-    public Item(String descripcion, int peso, boolean sePuedeCoger)
+    public Item(String descripcion, int peso, boolean sePuedeCoger, double multiplicador)
     {
         this.itemWeight = peso;
         this.itemDescription = descripcion;
         this.sePuedeCoger = sePuedeCoger;
+        this.multiplicadorFuerza = multiplicador;
     }
     
     public String getItemDescription(){
@@ -36,6 +38,17 @@ public class Item
         String aDevolver = "";
         if(itemDescription != null){
             aDevolver = "Objeto: " + itemDescription + "\n"+ "Peso objeto: " + itemWeight;
+        }
+        return aDevolver;
+    }
+    public double getMultiplicador(){
+        return multiplicadorFuerza;
+    }
+    
+    public boolean multiplicadorMasUno(){
+        Boolean aDevolver = false;
+        if(this.multiplicadorFuerza>1){
+            aDevolver = true;
         }
         return aDevolver;
     }

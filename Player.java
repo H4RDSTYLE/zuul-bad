@@ -5,14 +5,16 @@ public class Player
     private Stack<Room> rooms;
     private Room currentRoom;
     private ArrayList<Item> objetosRecogidos;
-    private int fuerza;
+    private ArrayList<Item> objetosPuestos;
+    private double fuerza;
     /**
      * Constructor for objects of class Player
      */
-    public Player(int fuerza)
+    public Player(double fuerza)
     {
         this.rooms = new Stack<Room>();
         objetosRecogidos = new ArrayList<Item>();
+        objetosPuestos = new ArrayList<Item>();
         this.fuerza = fuerza;
     }
 
@@ -81,7 +83,7 @@ public class Player
             }
         }
     }
-    
+
     public void drop(String itemDescription){
         for (int i = 0; i < this.objetosRecogidos.size(); i++){
             Item item = this.objetosRecogidos.get(i);
@@ -93,7 +95,7 @@ public class Player
             }
         }
     }
-    
+
     public void items(){
         int pesoTotal = 0;
         if(!objetosRecogidos.isEmpty()){
@@ -108,8 +110,32 @@ public class Player
         }
     }
 
+    public void put(String descripcion){
+        for(int i = 0; i < objetosRecogidos.size(); i++){
+            if(objetosRecogidos.get(i).getItemDescription().equals(descripcion)){
+                objetosPuestos.add(objetosRecogidos.get(i));
+                if(objetosRecogidos.get(i).multiplicadorMasUno()){
+                    fuerza = fuerza * objetosRecogidos.get(i).getMultiplicador();
+                    System.out.println("Tu fuerza se ha multiplicado por un: " + objetosRecogidos.get(i).getMultiplicador());
+                }
+                objetosRecogidos.remove(objetosRecogidos.get(i));
+            }
+        }
+    }
+
+    public void remove(String descripcion){
+        for(int i = 0; i < objetosPuestos.size(); i++){
+            if(objetosRecogidos.get(i).getItemDescription().equals(descripcion)){
+                objetosRecogidos.add(objetosRecogidos.get(i));
+                fuerza = fuerza/objetosRecogidos.get(i).getMultiplicador();
+                objetosPuestos.remove(objetosRecogidos.get(i));
+                System.out.println("Tu fuerza ha disminuido.");
+            }
+        }
+    }
+
     public void eat() {
-        System.out.println("You have eaten now and you are not hungry any more");
+        System.out.println("You have eaten now and you are not hungry any more!");
     }
 
     public void look() {

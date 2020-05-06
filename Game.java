@@ -25,7 +25,7 @@ public class Game
     /**
      * Create the game and initialise its internal map.
      */
-    public Game(int fuerzaJugador) 
+    public Game(double fuerzaJugador) 
     {
         parser = new Parser();
         jugador = new Player(fuerzaJugador);
@@ -38,14 +38,15 @@ public class Game
     private void createRooms()
     {
         Room plaza, fronton, parque, vecindario, bar, casas, iglesia;
-        Item espada, pocion, caramelo, armadura, anillo, pelota;
+        Item espada, pocion, caramelo, armadura, anillo, pelota, anilloFuerza;
         // create the objects
-        espada = new Item("espada", 1500, true);
-        pocion = new Item("pocion", 500, true);
-        caramelo = new Item("caramelo", 50, true);
-        armadura = new Item("armadura", 1000, true);
-        anillo = new Item("anillo", 5, true);
-        pelota = new Item("pelota", 400, true);
+        espada = new Item("espada", 1500, true, 0);
+        pocion = new Item("pocion", 500, true, 0);
+        caramelo = new Item("caramelo", 50, true, 0);
+        armadura = new Item("armadura", 1000, true, 0);
+        anillo = new Item("anillo", 5, true, 0);
+        pelota = new Item("pelota", 400, true, 0);
+        anilloFuerza = new Item("anilloFuerza", 100, true, 2);
 
         // create the rooms
         plaza = new Room("en la plaza del pueblo.");
@@ -81,6 +82,7 @@ public class Game
         iglesia.addItem(espada);
         casas.addItem(anillo);
         parque.addItem(caramelo);
+        plaza.addItem(anilloFuerza);
 
         jugador.setCurrentRoom(plaza);  // start game outside
     }
@@ -154,7 +156,7 @@ public class Game
         }
         else if(commandWord.equals("drop")){
             if(command.hasSecondWord()){
-                jugador.drop(command.getSecondWord().toString());
+                jugador.drop(command.getSecondWord());
             }
             else{
                 System.out.println("Oops what object do you want to drop?");
@@ -162,10 +164,26 @@ public class Game
         }
         else if(commandWord.equals("take")){
             if(command.hasSecondWord()){
-                jugador.take(command.getSecondWord().toString());
+                jugador.take(command.getSecondWord());
             }
             else{
                 System.out.println("Oops what object do you want to take?");
+            }
+        }
+        else if(commandWord.equals("put")){
+            if(command.hasSecondWord()){
+                jugador.put(command.getSecondWord());
+            }
+            else{
+                System.out.println("Oops what object do you want to put?");
+            }
+        }
+        else if(commandWord.equals("remove")){
+            if(command.hasSecondWord()){
+                jugador.remove(command.getSecondWord());
+            }
+            else{
+                System.out.println("Oops what object do you want to remove?");
             }
         }
 
