@@ -131,65 +131,56 @@ public class Game
             System.out.println("I don't know what you mean...");
             return false;
         }
-
-        String commandWord = command.getCommandWord();
-        if (commandWord.equals("help")) {
-            printHelp();
-        }
-        else if (commandWord.equals("go")) {
-            jugador.goRoom(command);
-        }
-        else if (commandWord.equals("quit")) {
-            wantToQuit = quit(command);
-        }
-        else if (commandWord.equals("look")) {
-            jugador.look();
-        }
-        else if(commandWord.equals("eat")){
-            jugador.eat();
-        }
-        else if(commandWord.equals("back")){
-            jugador.back();
-        }
-        else if(commandWord.equals("items")){
-            jugador.items();
-        }
-        else if(commandWord.equals("drop")){
-            if(command.hasSecondWord()){
-                jugador.drop(command.getSecondWord());
+        else{
+            String commandWord = command.getCommandWord();
+            if (commandWord.equals("help")) {
+                printHelp();
             }
-            else{
-                System.out.println("Oops what object do you want to drop?");
+            else if (commandWord.equals("go")) {
+                jugador.goRoom(command);
+            }
+            else if (commandWord.equals("quit")) {
+                wantToQuit = quit(command);
+            }
+            else if (commandWord.equals("look")) {
+                jugador.look();
+            }
+            else if(commandWord.equals("eat")){
+                jugador.eat();
+            }
+            else if(commandWord.equals("back")){
+                jugador.back();
+            }
+            else if(commandWord.equals("items")){
+                jugador.items();
+            }
+            else {
+                comprobarComandosEspeciales(command);
             }
         }
-        else if(commandWord.equals("take")){
-            if(command.hasSecondWord()){
-                jugador.take(command.getSecondWord());
-            }
-            else{
-                System.out.println("Oops what object do you want to take?");
-            }
-        }
-        else if(commandWord.equals("put")){
-            if(command.hasSecondWord()){
-                jugador.put(command.getSecondWord());
-            }
-            else{
-                System.out.println("Oops what object do you want to put?");
-            }
-        }
-        else if(commandWord.equals("remove")){
-            if(command.hasSecondWord()){
-                jugador.remove(command.getSecondWord());
-            }
-            else{
-                System.out.println("Oops what object do you want to remove?");
-            }
-        }
-
         return wantToQuit;
     }
 
+    public void comprobarComandosEspeciales(Command command){
+        if (command.hasSecondWord()){
+            String commandWord = command.getCommandWord();
+            if(commandWord.equals("drop")){
+                jugador.drop(command.getSecondWord().toString());
+            }
+            else if(commandWord.equals("take")){
+                jugador.take(command.getSecondWord().toString());
+            }
+            else if(commandWord.equals("put")){
+                jugador.put(command.getSecondWord().toString());
+            }
+            else if(commandWord.equals("remove")){
+                jugador.remove(command.getSecondWord().toString());
+            }
+        }
+        else{
+            System.out.println("What object are you refering to?");
+        }
+    }
     // implementations of user commands:
 
     /**

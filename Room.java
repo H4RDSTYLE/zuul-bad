@@ -67,7 +67,7 @@ public class Room
         String aDevolver = "Estas " + getDescription() + "\n" + "Exits: " + getExitString() + "\n" + getObjetos() ;
         return aDevolver;
     }
-    
+
     public String getObjetos(){
         String aDevolver = "";
         if(!objetos.isEmpty()){
@@ -78,7 +78,7 @@ public class Room
         }
         return aDevolver;
     }
-    
+
     /**
      * Define una salida para esta sala
      * 
@@ -88,17 +88,23 @@ public class Room
     public void setExit(String direccion, Room sala){
         direcciones.put(direccion, sala);
     }
-    
+
     public void addItem(Item item){
         objetos.add(item);
     }
-    
-    public ArrayList getArrayObjetos(){
-        return objetos;
-    }
-    
+
     public void removeItem(Item item){
         objetos.remove(item);
+    }
+
+    public Item getObjeto(String id){
+        Item aDevolver = null;
+        for(Item item : objetos){
+            if(item.getItemDescription().equals(id)){
+                aDevolver = item;
+            }
+        }
+        return aDevolver;
     }
 
     /**

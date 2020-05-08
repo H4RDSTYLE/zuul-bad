@@ -65,22 +65,15 @@ public class Player
     }
 
     public void take(String itemDescription){
-        ArrayList<Item> objetosDisponibles = currentRoom.getArrayObjetos();
-        Boolean haEntrado = false;
-        for (int i = 0; i < objetosDisponibles.size() && haEntrado == false; i++){
-            Item item = objetosDisponibles.get(i);
-            if(item.getItemDescription().equals(itemDescription)){
-                haEntrado = true;
-                if(item.getPeso()<fuerza){
-                    fuerza -= item.getPeso();
-                    objetosRecogidos.add(item);
-                    currentRoom.removeItem(item);
-                    System.out.println("You have took the item.");
-                }
-                else{
-                    System.out.println("You aren´t strong enought, try to drop an object.");
-                }
-            }
+        Item item = currentRoom.getObjeto(itemDescription);
+        if(item != null && item.getPeso()<fuerza){
+            fuerza -= item.getPeso();
+            objetosRecogidos.add(item);
+            currentRoom.removeItem(item);
+            System.out.println("You have took the item.");
+        }
+        else{
+            System.out.println("You aren´t strong enought, try to drop an object.");
         }
     }
 
